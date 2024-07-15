@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Text Generation</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+        position: relative;
+      }
+      h1 {
+        margin-bottom: 20px;
+      }
+      form {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        width: 300px;
+        margin-bottom: 20px;
+      }
+      label {
+        margin: 10px 0 5px 0;
+      }
+      input[type="text"],
+      input[type="number"] {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+      }
+      input[type="submit"] {
+        padding: 10px 20px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+      }
+      input[type="submit"]:hover {
+        background-color: #45a049;
+      }
+      .popup {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 20px;
+        width: 80%;
+        max-width: 600px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+      }
+      .popup h2 {
+        margin-top: 0;
+      }
+      .popup p {
+        white-space: pre-wrap;
+      }
+      .popup .close-btn {
+        background-color: #ff5c5c;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        padding: 5px 10px;
+        font-size: 16px;
+        float: right;
+      }
+      .popup .close-btn:hover {
+        background-color: #ff1c1c;
+      }
+      .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(5px);
+        z-index: 999;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      class="container"
+      style="
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      "
+    >
+      <h1>Text Generation Through Emotions</h1>
+
+      <form action="/generate_mood_text" method="post">
+        <label for="mood">Emotion:</label>
+        <input type="text" name="mood" id="mood" />
+
+        <label for="length">Length:</label>
+        <input type="number" id="length" name="length" value="300" />
+
+        <label for="temperature">Temperature:</label>
+        <input
+          type="number"
+          id="temperature"
+          name="temperature"
+          value="0.3"
+          step="0.1"
+        />
+
+        <input type="submit" value="Generate Mood Text" />
+      </form>
+    </div>
+
+    {% if generated_text %}
+    <div class="overlay"></div>
+    <div class="popup">
+      <button
+        class="close-btn"
+        onclick="document.querySelector('.overlay').style.display='none'; document.querySelector('.popup').style.display='none';"
+      >
+        X
+      </button>
+      <h2>Generated Text:</h2>
+      <p>{{ generated_text }}</p>
+    </div>
+    {% endif %}
+  </body>
+</html>
